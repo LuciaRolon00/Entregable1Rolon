@@ -37,8 +37,12 @@ function solicitarGenero() {
 function preguntar(mensaje, opciones) {
     let respuesta;
     do {
-        respuesta = parseInt(solicitarInformacion(mensaje));
+        respuesta = solicitarInformacion(mensaje);
         if (respuesta === null) return null;
+        respuesta = parseInt(respuesta);
+        if (!opciones.includes(respuesta)) {
+            alert("Opción no válida❌. Por favor, selecciona una opción entre " + opciones.join(", "));
+        }
     } while (!opciones.includes(respuesta));
     return respuesta;
 }
@@ -46,7 +50,25 @@ function preguntar(mensaje, opciones) {
 // FUNCIÓN PARA CALCULAR PUNTAJE
 function calcularPuntaje(respuestas) {
     let mensaje = "Tus respuestas fueron: " + respuestas.join(", ");
+    let resultadoFinal = determinarResultadoFinal(respuestas);
+    mensaje += "\nResultado final: " + resultadoFinal;
     return mensaje;
+}
+
+// FUNCIÓN PARA DETERMINAR RESULTADO FINAL
+function determinarResultadoFinal(respuestas) {
+    // NO LOGRO HACER QUE EL CÓDIGO CAMBIE LA RESPUESTA (siempre sale eléctrico como resultado final)
+    let suma = respuestas.reduce((a, b) => a + b, 0);
+
+    if (suma <= 5) {
+        return "Tipo Pokémon: Agua 🌊";
+    } else if (suma <= 10) {
+        return "Tipo Pokémon: Fuego 🔥";
+    } else if (suma <= 15) {
+        return "Tipo Pokémon: Planta 🌿";
+    } else {
+        return "Tipo Pokémon: Eléctrico ⚡";
+    }
 }
 
 // INICIO DEL SCRIPT
